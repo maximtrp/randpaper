@@ -1,6 +1,6 @@
 # randpaper
 
-_randpaper_ is a Python script to download photos tagged with a specified keyword from [Pexels](https://www.pexels.com/) website.
+_randpaper_ is a Python script to download photos tagged with a specified keyword (or a random one from the predefined list) from [Pexels](https://www.pexels.com/) website.
 
 To use it you must obtain an _API KEY_ from [Pexels](https://www.pexels.com/api/). Put it into `api.key` file near `randpaper.py` script or insert it below using an API_KEY variable.
 
@@ -10,7 +10,10 @@ _randpaper_ uses the following Python packages from the standard library: `json`
 
 ## Usage example
 
+To download a photo tagged with a random keyword (from the list above) and put it into `~/Pictures/Wallpapers/` directory:
+
 ```
+$ chmod +x randpaper.py
 $ ./randpaper.py -p ~/Pictures/Wallpapers/
 ```
 
@@ -24,7 +27,7 @@ Using [feh](https://feh.finalrewind.org/) and _randpaper_ from a command line:
 $ feh --bg-fill $(./randpaper.py -p ~/Pictures/Wallpapers/ -k tech)
 ```
 
-Setting a shortcut inside i3 config file:
+Setting a keyboard shortcut inside i3 `config` file:
 
 ```
 bindsym $mod+Print exec --no-startup-id "feh --bg-fill $(~/Programming/randpaper/randpaper.py -p ~/Pictures/Wallpapers/)"
