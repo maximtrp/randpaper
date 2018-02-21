@@ -87,7 +87,7 @@ def find_pic(path, keyword):
         pages = int(pre_response['total_results'] / 40) + 2
 
         # Iterating over 5 random pages until a photo with specified dimensions is found
-        for i in range(1):
+        for i in range(5):
             page_random = url + str(random.randrange(1, pages))
 
             # Loading and parsing a page
@@ -119,7 +119,6 @@ path = os.path.join(path, '')
 photos_local = glob.glob1(path, '*.*')
 
 photo_filename = find_pic(path, keyword)
-print(photo_filename)
 
 if photo_filename:
     print(photo_filename)
