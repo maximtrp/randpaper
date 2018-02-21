@@ -22,27 +22,32 @@ with open(os.path.join(sys.path[0], 'api.key')) as f:
 
 min_width = 1920
 min_height = 1024
-keywords = ['landscape', 'city', 'urban', 'nature', 'mountains', 'sea', 'ocean',
+
+keywords = ['landscape', 'city', 'nature', 'mountains', 'sea', 'ocean', 'pattern',
             'night', 'summer', 'winter', 'travel', 'beach', 'abstract', 'universe',
-            'snow', 'road', 'river', 'sky', 'blur', 'stars', 'street', 'sunset',
+            'snow', 'road', 'river', 'sky', 'blur', 'stars', 'streets', 'sunset',
             'texture', 'forest', 'rain', 'light']
 
-help_string = '''randpaper 0.1
+help_string = '''randpaper 0.2
 
-Usage: randpaper.py -p <path-to-wallpapers> [-k <search-keyword>]
+Usage: randpaper.py -p <path-to-wallpapers> [-a] [-k <search-keyword>] [-n <photos number>]
 
 OPTIONS
- -p          Path to wallpaper dir
+ -a          Search within popular photos only (optional)
  -k          Keyword (optional). If not specified, random keyword from a
-             predefined list will be used'''
+             predefined list will be used
+ -n          Number of photos to download (optional)
+ -p          Path to wallpaper dir'''
 
 def parse_args(argv):
 
     keyword = keywords[random.randrange(0, len(keywords))]
     path = ''
+    popular = False
+    photos_num = 1
 
     try:
-        opts, args = getopt.getopt(argv, "hp:k:")
+        opts, args = getopt.getopt(argv, "ahp:k:n:")
     except:
         print(help_string)
         sys.exit(2)
@@ -55,12 +60,16 @@ def parse_args(argv):
             path = arg
         elif opt == '-k':
             keyword = arg
+        elif opt == '-a':
+            popular = True
+        elif opt == '-n':
+            photos_num = int(arg)
 
     if not path:
         print(help_string)
         sys.exit(1)
 
-    return path, keyword
+    return path, keyword, popular, photos_num
 
 def download_photo(url, path):
     filename = url[url.rfind('/') + 1:]
@@ -73,14 +82,18 @@ def download_photo(url, path):
         return filename
     return False
 
-def find_pic(path, keyword):
+def find_pic(path, keyword, popular, photos_num):
 
     # Basic url
-    url = 'https://api.pexels.com/v1/search?query=' + keyword + '&per_page=40&page='
+    if popular:
+        url = 'https://api.pexels.com/v1/popular?per_page=40&page='
+    else:
+        url = 'https://api.pexels.com/v1/search?query=' + keyword + '&per_page=40&page='
 
     # Preloading first page
     page_first = url + '1'
     headers = {'Authorization': API_KEY}
+    photos = []
 
     try:
         pre = requests.get(page_first, headers=headers)
@@ -110,20 +123,25 @@ def find_pic(path, keyword):
                 if photos_local not in photos_local:
                     filename = download_photo(photo_url, path)
                     if filename:
-                        return os.path.join(path, filename)
+                        photos.append(os.path.join(path, filename))
+
+                    if len(photos) == photos_num:
+                        return photos
 
         return False
     except:
         return False
 
-path, keyword = parse_args(sys.argv[1:])
+path, keyword, popular, photos_num = parse_args(sys.argv[1:])
 path = os.path.join(path, '')
 photos_local = glob.glob1(path, '*.*')
+photos = find_pic(path, keyword, popular, photos_num)
 
-photo_filename = find_pic(path, keyword)
-
-if photo_filename:
-    print(photo_filename)
-else:
-    random_index = random.randrange(1, len(photos_local))
-    print(os.path.join(path, photos_local[random_index]))
+if photos:
+    print(' '.join(photos))
+elif photos_local:
+    photos = []
+    while len(photos) < photos_num:
+        random_index = random.randrange(1, len(photos_local))
+        photos.append(os.path.join(path, photos_local[random_index]))
+    print(' '.join(photos))
