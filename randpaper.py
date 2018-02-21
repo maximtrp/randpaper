@@ -23,7 +23,9 @@ with open(os.path.join(sys.path[0], 'api.key')) as f:
 min_width = 1920
 min_height = 1024
 keywords = ['landscape', 'city', 'urban', 'nature', 'mountains', 'sea', 'ocean',
-            'night', 'summer', 'winter', 'travel', 'beach', 'abstract', 'universe', 'snow']
+            'night', 'summer', 'winter', 'travel', 'beach', 'abstract', 'universe',
+            'snow', 'road', 'river', 'sky', 'blur', 'stars', 'street', 'sunset',
+            'texture', 'forest', 'rain', 'light']
 
 help_string = '''randpaper 0.1
 
