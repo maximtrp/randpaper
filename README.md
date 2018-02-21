@@ -19,7 +19,7 @@ $ ./randpaper.py -p ~/Pictures/Wallpapers/
 
 ## Using with i3
 
-I personally use this script with i3 to get a random photo and set it as a wallpaper.
+I personally use this script with [i3](https://i3wm.org/) to get a random photo and set it as a wallpaper.
 
 Using [feh](https://feh.finalrewind.org/) and _randpaper_ from a command line:
 
@@ -27,8 +27,12 @@ Using [feh](https://feh.finalrewind.org/) and _randpaper_ from a command line:
 $ feh --bg-fill $(./randpaper.py -p ~/Pictures/Wallpapers/ -k tech)
 ```
 
-Setting a keyboard shortcut inside i3 `config` file:
+Setting a keyboard shortcut inside [i3](https://i3wm.org/) `config` file:
 
 ```
 bindsym $mod+Print exec --no-startup-id "feh --bg-fill $(~/Programming/randpaper/randpaper.py -p ~/Pictures/Wallpapers/)"
 ```
+
+## Limits
+
+[Pexels API](https://www.pexels.com/api/) imposes certain limits on requests number per hour and month (200 and 2000).
