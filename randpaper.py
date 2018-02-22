@@ -97,20 +97,27 @@ def find_pic(path, keyword, popular, photos_num):
 
     try:
         pre = requests.get(page_first, headers=headers)
-        pre_response = json.loads(pre.content)
+        response = json.loads(pre.content)
         # Calculating overall page number
-        pages = int(pre_response['total_results'] / 40) + 2
+        if not popular:
+            pages = int(response['total_results'] / 40) + 2
 
         # Iterating over 5 random pages until a photo with specified dimensions is found
         for i in range(5):
-            page_random = url + str(random.randrange(1, pages))
+            if popular:
+                page_next = response['next_page']
+            else:
+                page_next = url + str(random.randrange(1, pages))
 
             # Loading and parsing a page
-            result = requests.get(page_random, headers=headers)
+            result = requests.get(page_next, headers=headers)
             response = json.loads(result.content)
+            page_photos_num = len(response['photos'])
 
             # Iterating over all photos on page
-            for p in response['photos']:
+            for i in range(page_photos_num):
+
+                p = response['photos'][random.randrange(0, page_photos_num)]
 
                 # If a photo doesn't match specified dimensions, continue iterating
                 if p['width'] < min_width or p['height'] < min_height:
