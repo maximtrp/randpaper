@@ -8,13 +8,27 @@ To use it you must obtain an _API KEY_ from [Pexels](https://www.pexels.com/api/
 
 _randpaper_ uses the following Python packages from the standard library: `json`, `random`, `glob`, `os`, `shutil`, `sys`, `getopt`. You must also install [requests](http://python-requests.org/) package.
 
-## Usage example
+## Usage examples
 
-To download a photo tagged with a random keyword (from the list above) and put it into `~/Pictures/Wallpapers/` directory:
+Download a photo tagged with a random keyword (from the predefined list) and put it into `~/Pictures/Wallpapers/` directory:
 
 ```
 $ chmod +x randpaper.py
 $ ./randpaper.py -p ~/Pictures/Wallpapers/
+```
+
+Download two photos:
+
+```
+$ chmod +x randpaper.py
+$ ./randpaper.py -p ~/Pictures/Wallpapers/ -n 2
+```
+
+Download two _popular_ photos:
+
+```
+$ chmod +x randpaper.py
+$ ./randpaper.py -p ~/Pictures/Wallpapers/ -n 2 -a
 ```
 
 ## Using with i3
