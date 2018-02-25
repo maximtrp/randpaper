@@ -49,4 +49,4 @@ bindsym $mod+Print exec --no-startup-id "feh --bg-fill $(~/Programming/randpaper
 
 ## Limits
 
-[Pexels API](https://www.pexels.com/api/) imposes certain limits on requests number per hour and month (200 and 2000).
+[Pexels API](https://www.pexels.com/api/) imposes certain limits on requests number per hour and month: 200 and 20000.
