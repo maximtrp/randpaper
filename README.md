@@ -8,6 +8,23 @@ To use it you must obtain an _API KEY_ from [Pexels](https://www.pexels.com/api/
 
 _randpaper_ uses the following Python packages from the standard library: `json`, `random`, `glob`, `os`, `shutil`, `sys`, `getopt`. You must also install [requests](http://python-requests.org/) package.
 
+## Help string
+
+Run with `-h` flag to see help string:
+
+```
+$ chmod +x randpaper.py
+$ ./randpaper.py -h
+Usage: randpaper.py [options]
+
+Options:
+  -h, --help  show this help message and exit
+  -a          search within popular photos only (optional)
+  -k KEYWORD  keyword (default - choose one from a predefined list)
+  -n NUMBER   number of photos to download (default = 1)
+  -p PATH     path to wallpaper dir
+```
+
 ## Usage examples
 
 Download a photo tagged with a random keyword (from the predefined list) and put it into `~/Pictures/Wallpapers/` directory:
