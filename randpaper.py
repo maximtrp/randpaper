@@ -12,7 +12,7 @@ import glob
 import os
 import shutil
 import sys
-import getopt
+import optparse
 
 # PARAMS
 with open(os.path.join(sys.path[0], 'api.key')) as f:
@@ -28,48 +28,26 @@ keywords = ['landscape', 'city', 'nature', 'mountains', 'sea', 'ocean', 'pattern
             'snow', 'road', 'river', 'sky', 'blur', 'stars', 'streets', 'sunset',
             'texture', 'forest', 'rain', 'light']
 
-help_string = '''randpaper 0.2
+from optparse import OptionParser
 
-Usage: randpaper.py -p <path-to-wallpapers> [-a] [-k <search-keyword>] [-n <photos number>]
+parser = OptionParser(usage="Usage: %prog [options]")
+parser.add_option("-a", dest="popular", action='store_true', help="search within popular photos only (optional)", default=False)
+parser.add_option("-k", dest="keyword", type='string', help="keyword (default - choose one from a predefined list)", default=None)
+parser.add_option("-n", dest="number", type='int', help="number of photos to download (default = 1)", default=1)
+parser.add_option("-p", dest="path", type='string', help="path to wallpaper dir", default=None)
 
-OPTIONS
- -a          Search within popular photos only (optional)
- -k          Keyword (optional). If not specified, random keyword from a
-             predefined list will be used
- -n          Number of photos to download (optional)
- -p          Path to wallpaper dir'''
+options, args = parser.parse_args()
 
-def parse_args(argv):
+if not options.path:
+    parser.error('No path supplied')
+    sys.exit(1)
 
-    keyword = keywords[random.randrange(0, len(keywords))]
-    path = ''
-    popular = False
-    photos_num = 1
-
-    try:
-        opts, args = getopt.getopt(argv, "ahp:k:n:")
-    except:
-        print(help_string)
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt == '-h':
-            print(help_string)
-            sys.exit()
-        elif opt == '-p':
-            path = arg
-        elif opt == '-k':
-            keyword = arg
-        elif opt == '-a':
-            popular = True
-        elif opt == '-n':
-            photos_num = int(arg)
-
-    if not path:
-        print(help_string)
-        sys.exit(1)
-
-    return path, keyword, popular, photos_num
+keyword = keywords[random.randrange(0, len(keywords))] if not options.keyword else options.keyword
+path = options.path
+path = os.path.join(path, '')
+popular = options.popular
+photos_num = options.number
+photos_local = glob.glob1(path, '*.*')
 
 def download_photo(url, path):
     filename = url[url.rfind('/') + 1:]
@@ -139,9 +117,6 @@ def find_pic(path, keyword, popular, photos_num):
     except:
         return False
 
-path, keyword, popular, photos_num = parse_args(sys.argv[1:])
-path = os.path.join(path, '')
-photos_local = glob.glob1(path, '*.*')
 photos = find_pic(path, keyword, popular, photos_num)
 
 if photos:
