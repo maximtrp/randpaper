@@ -30,27 +30,20 @@ Options:
 Download a photo tagged with a random keyword (from the predefined list) and put it into `~/Pictures/Wallpapers/` directory:
 
 ```
-$ chmod +x randpaper.py
 $ ./randpaper.py -p ~/Pictures/Wallpapers/
 ```
 
 Download two photos:
 
 ```
-$ chmod +x randpaper.py
 $ ./randpaper.py -p ~/Pictures/Wallpapers/ -n 2
 ```
 
 Download two _popular_ photos:
 
 ```
-$ chmod +x randpaper.py
 $ ./randpaper.py -p ~/Pictures/Wallpapers/ -n 2 -a
 ```
-
-## Using with i3
-
-I personally use this script with [i3](https://i3wm.org/) to get a random photo and set it as a wallpaper.
 
 Using [feh](https://feh.finalrewind.org/) and _randpaper_ from a command line:
 
@@ -58,7 +51,10 @@ Using [feh](https://feh.finalrewind.org/) and _randpaper_ from a command line:
 $ feh --bg-fill $(./randpaper.py -p ~/Pictures/Wallpapers/ -k tech)
 ```
 
-Setting a keyboard shortcut inside [i3](https://i3wm.org/) `config` file:
+## Using with i3
+
+I personally use this script with [i3](https://i3wm.org/) to get a random photo and set it as a wallpaper.
+Setting a keyboard shortcut inside i3 `config` file:
 
 ```
 bindsym $mod+Print exec --no-startup-id "feh --bg-fill $(~/Programming/randpaper/randpaper.py -p ~/Pictures/Wallpapers/)"
