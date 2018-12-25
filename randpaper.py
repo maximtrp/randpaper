@@ -20,13 +20,13 @@ with open(os.path.join(sys.path[0], 'api.key')) as f:
 # or comment the above lines and uncomment the following one and specify your key
 # API_KEY = ''
 
-min_width = 1920
-min_height = 1024
+min_width = 2560
+min_height = 1440
 
 keywords = ['landscape', 'city', 'nature', 'mountains', 'sea', 'ocean', 'pattern',
             'night', 'summer', 'winter', 'travel', 'beach', 'abstract', 'universe',
             'snow', 'road', 'river', 'sky', 'blur', 'stars', 'streets', 'sunset',
-            'texture', 'forest', 'rain', 'light']
+            'forest', 'rain', 'light', 'abstract', 'macro', 'art', 'design']
 
 from optparse import OptionParser
 
