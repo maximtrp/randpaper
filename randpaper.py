@@ -7,12 +7,12 @@ randpaper.py script or insert below using an API_KEY variable.'''
 
 import requests
 import json
-import random
+import secrets
 import glob
 import os
 import shutil
 import sys
-import optparse
+from optparse import OptionParser
 
 # PARAMS
 with open(os.path.join(sys.path[0], 'api.key')) as f:
@@ -28,7 +28,6 @@ keywords = ['landscape', 'city', 'nature', 'mountains', 'sea', 'ocean', 'pattern
             'snow', 'road', 'river', 'sky', 'blur', 'stars', 'streets', 'sunset',
             'forest', 'rain', 'light', 'abstract', 'macro', 'art', 'design']
 
-from optparse import OptionParser
 
 parser = OptionParser(usage="Usage: %prog [options]")
 parser.add_option("-a", dest="popular", action='store_true', help="search within popular photos only (optional)", default=False)
@@ -42,7 +41,7 @@ if not options.path:
     parser.error('No path supplied')
     sys.exit(1)
 
-keyword = keywords[random.randrange(0, len(keywords))] if not options.keyword else options.keyword
+keyword = keywords[secrets.choice(range(0, len(keywords)))] if not options.keyword else options.keyword
 path = options.path
 path = os.path.join(path, '')
 popular = options.popular
@@ -81,11 +80,11 @@ def find_pic(path, keyword, popular, photos_num):
             pages = int(response['total_results'] / 40) + 2
 
         # Iterating over 5 random pages until a photo with specified dimensions is found
-        for i in range(5):
+        for _ in range(5):
             if popular:
                 page_next = response['next_page']
             else:
-                page_next = url + str(random.randrange(1, pages))
+                page_next = url + str(secrets.choice(range(1, pages)))
 
             # Loading and parsing a page
             result = requests.get(page_next, headers=headers)
@@ -95,7 +94,7 @@ def find_pic(path, keyword, popular, photos_num):
             # Iterating over all photos on page
             for i in range(page_photos_num):
 
-                p = response['photos'][random.randrange(0, page_photos_num)]
+                p = response['photos'][secrets.choice(range(0, page_photos_num))]
 
                 # If a photo doesn't match specified dimensions, continue iterating
                 if p['width'] < min_width or p['height'] < min_height:
@@ -105,7 +104,7 @@ def find_pic(path, keyword, popular, photos_num):
                 photo_url = p['src']['original']
                 photo_name = photo_url[photo_url.rfind('/') + 1:]
 
-                if photos_local not in photos_local:
+                if photo_name not in photos_local:
                     filename = download_photo(photo_url, path)
                     if filename:
                         photos.append(os.path.join(path, filename))
@@ -115,7 +114,7 @@ def find_pic(path, keyword, popular, photos_num):
 
         return False
     except:
-        return False
+        raise Exception("Error occurred during photo download")
 
 photos = find_pic(path, keyword, popular, photos_num)
 
@@ -124,6 +123,6 @@ if photos:
 elif photos_local:
     photos = []
     while len(photos) < photos_num:
-        random_index = random.randrange(1, len(photos_local))
+        random_index = secrets.choice(range(1, len(photos_local)))
         photos.append(os.path.join(path, photos_local[random_index]))
     print(' '.join(photos))
