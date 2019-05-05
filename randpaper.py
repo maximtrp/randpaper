@@ -92,7 +92,7 @@ def find_pic(path, keyword, popular, photos_num):
             page_photos_num = len(response['photos'])
 
             # Iterating over all photos on page
-            for i in range(page_photos_num):
+            for _ in range(page_photos_num):
 
                 p = response['photos'][secrets.choice(range(0, page_photos_num))]
 
