@@ -1,5 +1,7 @@
 # randpaper
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b1e2ba6c9e27468aa1c3c7482ecc1bff)](https://www.codacy.com/app/maximtrp/randpaper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=maximtrp/randpaper&amp;utm_campaign=Badge_Grade)
+
 _randpaper_ is a Python script to download photos tagged with a specified keyword (or a random one from the predefined list) from [Pexels](https://www.pexels.com/) website.
 
 To use it you must obtain an _API KEY_ from [Pexels](https://www.pexels.com/api/). Put it into `api.key` file near `randpaper.py` script or insert it below using an API_KEY variable.
