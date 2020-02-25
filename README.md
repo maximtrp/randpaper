@@ -58,7 +58,9 @@ $ feh --bg-fill $(./randpaper.py -p ~/Pictures/Wallpapers/ -k tech)
 I personally use this script with [i3](https://i3wm.org/) to get a random photo and set it as a wallpaper.
 Setting a keyboard shortcut inside i3 `config` file:
 
-> bindsym $mod+Print exec --no-startup-id "feh --bg-fill $(~/Programming/randpaper/randpaper.py -p ~/Pictures/Wallpapers/)"
+```
+bindsym $mod+Print exec --no-startup-id "feh --bg-fill $(~/Programming/randpaper/randpaper.py -p ~/Pictures/Wallpapers/)"
+```
 
 ## Limits
 
